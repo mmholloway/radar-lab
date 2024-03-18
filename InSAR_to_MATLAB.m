@@ -15,41 +15,26 @@ clearvars;
 fldr = 'subdir1'; %%%%% CHANGE THIS TO THE NAME OF THE FOLDER YOU WANT
 addpath(strcat('C:\Users\mmpho\sent_test\',fldr)); % I store all relevant InSAR data in subdirectories under the main directory 'sent_test''
 
-% Don't think we need this?
-% [A geoR]=geotiffread('20200717_20200810.tif');
-
 % Define image size
 % Values taken from dem.rsc
 nr = 7200; % number of x (range) pixels (WIDTH in dem.rsc)
 naz = 3600; % number of y (azimuth) pixels (FILE_LENGTH in dem.rsc)
 
-n = 16; % number of SLCs
-
-% Read in interferogram .out files
-Bperp0 = load('Bperp.out');
-Tm0 = load('Tm.out');
-deltime0 = load('deltime.out');
-timedeltas0 = load('timedeltas.out');
-
-Bperp1=zeros(size(Bperp0));
-Tm1=zeros(size(Tm0));
-deltime1=zeros(size(deltime0));
+% n = 16; % number of SLCs
 
 cells2 = importdata('sbas_list');
-N2=length(cells2);
+N2 = length(cells2);
 
-sbas_dates0 = string(cells2.textdata);
-sbas_data0 = string(cells2.data);
+% sbas_dates0 = string(cells2.textdata);
+% sbas_data0 = string(cells2.data);
 cells = importdata('intlist');
 N = length(cells);
-lambda = 5.6; % wavelength %%%%%%%%%%%%%%%%%%%%%% WHAT IS THIS FOR US??
+% lambda = 5.6; % wavelength %%%%%%%%%%%%%%%%%%%%%% WHAT IS THIS FOR US?? CAN I DELETE IT?
 
 unw_phase=zeros(nr,naz,N);
-%uni=zeros(nr,naz,N);
 amps=zeros(nr,naz,N);
 ints=zeros(nr,naz,N);
 coh=zeros(nr,naz,N);
-%uni=zeros(nr,naz,N);
 date_pair=cell(2,N);
 doy_pair=cell(2,N);
 
@@ -58,26 +43,26 @@ doy_pair=cell(2,N);
 for i=1:N
     disp(i)
     strint = cells{i};
-    strint1 = strcat('ints/',strint);
+    %strint1 = strcat('ints/',strint);
     strunw1 = strrep(strint,'.int','.unw');
-    strunw = strcat('unws/',strunw1);
+    %strunw = strcat('unws/',strunw1);
     stramp1 = strrep(strint,'.int','.amp');
-    stramp = strcat('amps/',stramp1);
+    %stramp = strcat('amps/',stramp1);
     strcc1 = strrep(strint,'.int','.cc');
-    strcc = strcat('ccs/',strcc1);
+    %strcc = strcat('ccs/',strcc1);
     struni1 = strrep(strint,'.int','.int');
-    struni = strcat('ints/',struni1);
+    %struni = strcat('ints/',struni1);
 
     % Correlations
-    filename_c=sprintf('%s',strcc);
-    fid=fopen(filename_c);
-    dat=fread(fid,[2*nr,inf],'float','ieee-le');
-    temp=dat((nr+1):end,:);
+    filename_c = sprintf('%s',strcc1);
+    fid = fopen(filename_c);
+    dat = fread(fid,[2*nr,inf],'float','ieee-le');
+    temp = dat((nr+1):end,:);
     coh(:,:,i)=temp;
     fclose(fid);
 
     % Unwrapped phase
-    filename=sprintf('%s',strunw);
+    filename=sprintf('%s',strunw1);
     fid=fopen(filename);
     dat=fread(fid,[2*nr,inf],'float','ieee-le');
     temp=dat(nr+1:end,:);
@@ -85,7 +70,7 @@ for i=1:N
     fclose(fid);
     
     % Interferograms
-    filename=sprintf('%s',struni);
+    filename=sprintf('%s',struni1);
     fid=fopen(filename);
     dat=fread(fid,[2*nr,inf],'float','ieee-le');
     temp=dat(1:2:end,1:naz)+1i*dat(2:2:end,1:naz);
@@ -93,7 +78,7 @@ for i=1:N
     fclose(fid);
     
     % Amplitude
-    filename=sprintf('%s',strint1);
+    filename=sprintf('%s',strint);
     fid=fopen(filename);
     dat=fread(fid,[2*nr,inf],'float','ieee-le');
     temp=dat(1:2:2*nr-1,:)+1i*dat(2:2:2*nr,:);
@@ -101,7 +86,7 @@ for i=1:N
     fclose(fid);
     
     % Amplitude
-    filename=sprintf('%s',stramp);
+    filename=sprintf('%s',stramp1);
     fid=fopen(filename);
     dat=fread(fid,[2*nr,inf],'float','ieee-le');
     temp=dat(1:2:2*nr-1,:)+1i*dat(2:2:2*nr,:);
@@ -129,3 +114,5 @@ for i=1:N
     doy_pair{1,i}=doy1;
     doy_pair{2,i}=doy2;
 end
+
+disp('Done with processing')
