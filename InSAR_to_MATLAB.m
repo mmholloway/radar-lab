@@ -26,12 +26,12 @@ N2 = length(cells2);
 cells = importdata('intlist');
 N = length(cells);
 
-unw_phase=zeros(nr,naz,N);
-amps=zeros(nr,naz,N);
-ints=zeros(nr,naz,N);
-coh=zeros(nr,naz,N);
-date_pair=cell(2,N);
-doy_pair=cell(2,N);
+unw_phase = zeros(nr,naz,N);
+amps = zeros(nr,naz,N);
+ints = zeros(nr,naz,N);
+coh = zeros(nr,naz,N);
+date_pair = cell(2,N);
+doy_pair = cell(2,N);
 
 % Read in the unwrapped phase (unw), coherence (coh), amplitude (amp) and
 % unimodally-corrected unwrapped phase (uni)
