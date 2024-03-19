@@ -1,6 +1,6 @@
 %% Accessing InSAR Data Using MATLAB
 % * Author:                  Miranda Holloway
-% * Date:                    Created 3/18/2023, Last Edited 3/18/2024
+% * Date:                    Created 3/18/2023, Last Edited 3/19/2024
 %
 % This code is originally adapted from post_process_data_ascending.m
 % written by Dr. Roger Michaelides.
@@ -26,6 +26,7 @@ N2 = length(cells2);
 cells = importdata('intlist');
 N = length(cells);
 
+phase = zeros(nr,naz,N);
 unw_phase = zeros(nr,naz,N);
 amps = zeros(nr,naz,N);
 ints = zeros(nr,naz,N);
@@ -106,3 +107,4 @@ for i=1:N
 end
 
 disp('Done with processing')
+
