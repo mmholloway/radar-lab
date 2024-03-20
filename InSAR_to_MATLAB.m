@@ -20,9 +20,6 @@ addpath(strcat('C:\Users\mmpho\sent_test\',fldr)); % I store all relevant InSAR 
 nr = 7200; % number of x (range) pixels (WIDTH in dem.rsc)
 naz = 3600; % number of y (azimuth) pixels (FILE_LENGTH in dem.rsc)
 
-cells2 = importdata('sbas_list');
-N2 = length(cells2);
-
 cells = importdata('intlist');
 N = length(cells);
 
