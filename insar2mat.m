@@ -30,7 +30,7 @@
 % # |saving| - A boolean value that indicates if you want the processed
 % data to be saved as .mat files in the specified subdirectory.
 
-function done = insar2mat_func(dir,amp,cc,int,unw,saving)
+function done = insar2mat(dir,amp,cc,int,unw,saving)
 filepath = strcat('C:\Users\mmpho\sent_test\',dir,'\');
 addpath(filepath);
 
