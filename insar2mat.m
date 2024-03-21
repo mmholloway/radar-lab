@@ -3,15 +3,15 @@
 % * Date:                    Created 3/19/2023, Last Edited 3/20/2024
 %
 % This code is originally adapted from post_process_data_ascending.m
-% written by Dr. Roger Michaelides and my InSAR_to_MATLAB.m.
+% written by Dr. Roger Michaelides.
 %
 % The purpose of this function is to convert InSAR data so that we can use
-% it in MATLAB, specifically for .amp, .cc, .int, and .unw file types.
+% it in MATLAB, specifically for |.amp|, |.cc|, |.int|, and |.unw| file types.
 %
 % Before you can use this function, you must go through and edit the
-% filepath variable (line 34). This variable represents the general folder
+% |filepath| variable (line 34). This variable represents the general folder
 % where your InSAR data is located in sub-directories (NOT a specific
-% folder containing InSAR data). This filepath variable should be a
+% folder containing InSAR data). This |filepath| variable should be a
 % directory of subdirectories (for me, it is the directory where I scp my
 % data files to on my local machine).
 %
@@ -30,7 +30,7 @@
 % # |saving| - A boolean value that indicates if you want the processed
 % data to be saved as .mat files in the specified subdirectory.
 
-function done = insar2mat(dir,amp,cc,int,unw,saving)
+function [amps_out, coh_out, ints_out, phase_out, unw_phase_out] = insar2mat(dir,amp,cc,int,unw,saving)
 filepath = strcat('C:\Users\mmpho\sent_test\',dir,'\');
 addpath(filepath);
 
@@ -162,7 +162,7 @@ end
 disp('Done with processing')
 
 if (saving)
-    disp(strcat("Saving variables as .mat files to filepath ",filepath,' now'))
+    disp(strcat("Saving variable(s) as .mat files to filepath ",filepath,' now'))
 
     if (amp)
         save(strcat(filepath,'amps_data.mat'),'amps',"-v7.3");
@@ -186,4 +186,28 @@ if (saving)
 end
 
 disp('Done with saving files')
+
+% Assign outputs
+if (amp)
+    amps_out = amps;
+else
+    amps_out = 0;
+end
+if (cc)
+    coh_out = coh;
+else
+    coh_out = 0;
+end
+if (int)
+    ints_out = ints;
+    phase_out = phase;
+else
+    ints_out = 0;
+    phase_out = 0;
+end
+if (unw)
+    unw_phase_out = unw_phase;
+else
+    unw_phase_out = 0;
+end
 end
