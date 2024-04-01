@@ -28,7 +28,33 @@
 % # |unw| - A boolean value that indicates if you want to process any
 % |.unw| files in the specified sub-directory.
 % # |saving| - A boolean value that indicates if you want the processed
-% data to be saved as .mat files in the specified subdirectory.
+% data to be saved as .mat files. Note that all .mat files will be saved in
+% a new subdirectory called "Processed .mat Files" under the directory of
+% InSAR data |dir| specified as the first argument in this function.
+%
+%% Outputs
+% # |amps_out| - The array of amplitude values for all image(s) in the
+% folder. This output will return a (width) x (length) x (number of images)
+% sized array if input |amp = 1|; otherwise, when input |amp = 0|, this
+% value will be set to 0.
+% # |coh_out| - The array of coherence values for all image(s) in the
+% folder. This output will return a (width) x (length) x (number of images)
+% sized array if input |amp = 1|; otherwise, when input |amp = 0|, this
+% value will be set to 0.
+% # |ints_out| - The array of int values for all image(s) in the
+% folder. This output will return a (width) x (length) x (number of images)
+% sized array if input |amp = 1|; otherwise, when input |amp = 0|, this
+% value will be set to 0.
+% # |phase_out| - The array of phase values for all image(s) in the
+% folder. This output will return a (width) x (length) x (number of images)
+% sized array if input |amp = 1|; otherwise, when input |amp = 0|, this
+% value will be set to 0.
+% # |unw_phase_out| - The array of unwrapped phase values for all image(s)
+% in the folder. This output will return a (width) x (length) x (number of
+% images) sized array if input |amp = 1|; otherwise, when input |amp = 0|,
+% this value will be set to 0.
+%
+%% Code
 
 function [amps_out, coh_out, ints_out, phase_out, unw_phase_out] = insar2mat(dir,amp,cc,int,unw,saving)
 filepath = strcat('C:\Users\mmpho\sent_test\',dir,'\');
@@ -162,7 +188,13 @@ end
 disp('Done with processing')
 
 if (saving)
-    disp(strcat("Saving variable(s) as .mat files to filepath ",filepath,' now'))
+    filepath = strcat(filepath,'Processed .mat Files\');
+    
+    if (~isfolder(filepath))
+        mkdir(filepath);
+    end
+    
+    disp(strcat("Saving variable(s) as .mat files to filepath ",filepath," now"))
 
     if (amp)
         save(strcat(filepath,'amps_data.mat'),'amps',"-v7.3");

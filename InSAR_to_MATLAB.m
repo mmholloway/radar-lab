@@ -44,8 +44,8 @@ for i=1:N
     % Correlations
     filename_c = sprintf('%s',strcc1);
     fid = fopen(filename_c);
-    dat = fread(fid,[2*nr,inf],'float','ieee-le');
-    temp = dat((nr+1):end,:);
+    dat2 = fread(fid,[2*nr,inf],'float','ieee-le');
+    temp = dat2((nr+1):end,:);
     coh(:,:,i) = temp;
     fclose(fid);
 
