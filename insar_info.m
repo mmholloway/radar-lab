@@ -1,19 +1,11 @@
 %% InSAR Info
 % * Author:                  Miranda Holloway
-% * Date:                    Created 4/2/2023, Last Edited 4/___/2024
+% * Date:                    Created 4/2/2023, Last Edited 4/11/2024
 %
-%% Variables used to test code
-
-clc;
-clearvars;
-close all;
-
-dir = 'subdir1';
-no_x_tix = 3;
-no_y_tix = 10;
 
 %% Code (make this a section heading after testing)
 
+function [pix_out,labels_out] = igram_latlong(dir)
 filepath = strcat('C:\Users\mmpho\sent_test\',dir,'\');
 addpath(filepath);
 
@@ -121,6 +113,10 @@ for idx = [1 2]
 end
 
 labels = round(labels,2);
+
+pix_out = pix;
+labels_out = labels;
+end
 
 
 %% Tested code that works only when |no_x_ticks = 5|

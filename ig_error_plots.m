@@ -12,20 +12,22 @@ close all;
 
 %% Pull in data
 
-% Either use insar2mat() function
+% Define subdirectory to use
 subdir = "subdir_100m";
-[amps,coh,ints,phase,unw_phase,date_pair,doy_pair,N] = insar2mat(subdir,1,1,1,1,1);
+
+% Either pull in data with the insar2mat() function
+% [amps,coh,ints,phase,unw_phase,date_pair,doy_pair,N] = insar2mat(subdir,1,1,1,1,1);
 
 % Or pull in .mat files from the subdirectory
-% addpath(strcat('C:\Users\mmpho\sent_test\',subdir,'\Processed .mat Files'))
-% amps = load('amps_data.mat');
-% coh = load('coherence_data.mat');
-% ints = load('int_data.mat');
-% phase = load('phase_data.mat');
-% unw_phase = load('unw_phase_data.mat');
-% date_pair = load('date_pair_data.mat');
-% doy_pair = load('doy_pair_data.mat');
-% N = size(doy_pair,2);
+addpath(strcat('C:\Users\mmpho\sent_test\',subdir,'\Processed .mat Files'))
+amps = load('amps_data.mat');
+coh = load('coherence_data.mat');
+ints = load('int_data.mat');
+phase = load('phase_data.mat');
+unw_phase = load('unw_phase_data.mat');
+date_pair = load('date_pair_data.mat');
+doy_pair = load('doy_pair_data.mat');
+N = size(doy_pair,2);
 
 %% Get an average coherence file 
 avecc = mean(coh,3);
