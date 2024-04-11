@@ -1,6 +1,6 @@
 %% Function to Convert InSAR Data into |.mat| Files
 % * Author:                  Miranda Holloway
-% * Date:                    Created 3/19/2023, Last Edited 3/20/2024
+% * Date:                    Created 3/19/2023, Last Edited 4/4/2024
 %
 % This code is originally adapted from post_process_data_ascending.m
 % written by Dr. Roger Michaelides.
@@ -53,10 +53,17 @@
 % in the folder. This output will return a (width) x (length) x (number of
 % images) sized array if input |amp = 1|; otherwise, when input |amp = 0|,
 % this value will be set to 0.
+% # |date_pair_out| - The array containing all date information for all
+% image(s) in the folder. This output will return a 2 x (number of images)
+% for all values.
+% # |doy_pair_out| - The array containing all date information for all
+% image(s) in the folder. This output will return a 2 x (number of images)
+% for all values.
+% # |N_out| - The number of images in your subdirectory.
 %
 %% Code
 
-function [amps_out, coh_out, ints_out, phase_out, unw_phase_out] = insar2mat(dir,amp,cc,int,unw,saving)
+function [amps_out, coh_out, ints_out, phase_out, unw_phase_out, date_pair_out, doy_pair_out, N_out] = insar2mat(dir,amp,cc,int,unw,saving)
 filepath = strcat('C:\Users\mmpho\sent_test\',dir,'\');
 addpath(filepath);
 
@@ -189,12 +196,17 @@ disp('Done with processing')
 
 if (saving)
     filepath = strcat(filepath,'Processed .mat Files\');
-    
+
     if (~isfolder(filepath))
         mkdir(filepath);
     end
-    
+
     disp(strcat("Saving variable(s) as .mat files to filepath ",filepath," now"))
+
+    save(strcat(filepath,'date_pair_data.mat'),'date_pair',"-v7.3");
+    disp('Saved date_pair_data.mat to folder')
+    save(strcat(filepath,'doy_pair_data.mat'),'doy_pair',"-v7.3");
+    disp('Saved doy_pair_data.mat to folder')
 
     if (amp)
         save(strcat(filepath,'amps_data.mat'),'amps',"-v7.3");
@@ -220,6 +232,10 @@ end
 disp('Done with saving files')
 
 % Assign outputs
+date_pair_out = date_pair;
+doy_pair_out = doy_pair;
+N_out = N;
+
 if (amp)
     amps_out = amps;
 else
