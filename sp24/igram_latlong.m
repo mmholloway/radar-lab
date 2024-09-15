@@ -5,8 +5,8 @@
 
 %% Code (make this a section heading after testing)
 
-function [pix_out,labels_out] = igram_latlong(dir)
-filepath = strcat('C:\Users\mmpho\sent_test\',dir,'\');
+function [pix_out,labels_out] = igram_latlong(subdir, no_x_tix, no_y_tix)
+filepath = strcat('C:\Users\mmpho\sent_test\',subdir,'\');
 addpath(filepath);
 
 % Read dem.rsc to get image size
