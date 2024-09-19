@@ -44,7 +44,7 @@ sbas_dates0=string(cells2.textdata);
 sbas_data0=string(cells2.data);
 cells=importdata('intlist');
 %cells=importdata('intlist36');
-N=4;% length(cells);
+N=length(cells);
 lambda=5.6; %wavelength
 
 unw_phase=zeros(nr,naz,N);
@@ -79,7 +79,7 @@ for i=1:N
     filename_c=sprintf('%s',strcc); 
     fid=fopen(filename_c);
     dat=fread(fid,[2*nr,inf],'float','ieee-le');
-    temp=dat((nr+1):end,:);  
+    temp=dat((nr+1):end,:);
     coh(:,:,i)=temp;
     fclose(fid);
 % unwrapped phase
@@ -104,12 +104,12 @@ for i=1:N
     ints(:,:,i)=temp;
     fclose(fid);
 % Amplitude
-    % filename=sprintf('%s',stramp);  
-    % fid=fopen(filename);
-    % dat=fread(fid,[2*nr,inf],'float','ieee-le');
-    % temp=dat(1:2:2*nr-1,:)+1i*dat(2:2:2*nr,:);
-    % amps(:,:,i)=temp;
-    % fclose(fid);
+    filename=sprintf('%s',stramp);  
+    fid=fopen(filename);
+    dat=fread(fid,[2*nr,inf],'float','ieee-le');
+    temp=dat(1:2:2*nr-1,:)+1i*dat(2:2:2*nr,:);
+    amps(:,:,i)=temp;
+    fclose(fid);
 % date information
 split1=strsplit(strint,'_');
 strint2=split1{2};
